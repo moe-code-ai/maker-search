@@ -6,111 +6,16 @@
 <title>取扱メーカー 製品検索</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg: #f5f4f0;
-  --surface: #ffffff;
-  --surface2: #efede8;
-  --border: #e0ddd5;
-  --border2: #c8c5bb;
-  --text: #18181a;
-  --text2: #64625c;
-  --text3: #9e9b93;
-  --accent: #1a55a0;
-  --accent-bg: #e8f0fb;
-  --accent-hover: #133f80;
-  --green: #166534;
-  --green-bg: #dcfce7;
-  --red: #991b1b;
-  --red-bg: #fef2f2;
+  --bg: #f5f4f0; --surface: #ffffff; --surface2: #efede8;
+  --border: #e0ddd5; --border2: #c8c5bb;
+  --text: #18181a; --text2: #64625c; --text3: #9e9b93;
+  --accent: #1a55a0; --accent-bg: #e8f0fb; --accent-hover: #133f80;
+  --red: #991b1b; --red-bg: #fef2f2;
 }
-
-body {
-  font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-
-/* ===== パスワード画面 ===== */
-#lockScreen {
-  position: fixed; inset: 0;
-  background: var(--bg);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 1000; padding: 20px;
-}
-
-.lock-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 44px 40px 36px;
-  width: 100%; max-width: 380px;
-  text-align: center;
-}
-
-.lock-icon {
-  width: 60px; height: 60px;
-  background: var(--accent-bg);
-  border-radius: 16px;
-  display: grid; place-items: center;
-  margin: 0 auto 22px;
-}
-.lock-icon svg { width: 30px; height: 30px; }
-
-.lock-card h1 { font-size: 19px; font-weight: 600; margin-bottom: 8px; }
-.lock-card .lock-desc { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 28px; }
-
-.pw-wrap { position: relative; margin-bottom: 10px; }
-.pw-wrap input {
-  width: 100%; padding: 11px 44px 11px 14px;
-  border: 1px solid var(--border); border-radius: 9px;
-  font-size: 15px; font-family: inherit;
-  outline: none; transition: border-color .15s;
-  background: var(--surface); color: var(--text);
-  letter-spacing: .1em;
-}
-.pw-wrap input:focus { border-color: var(--accent); }
-.pw-wrap input.error { border-color: #f87171; animation: shake .3s ease; }
-
-.eye-btn {
-  position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
-  background: none; border: none; cursor: pointer;
-  color: var(--text3); padding: 4px; line-height: 0;
-}
-.eye-btn:hover { color: var(--text2); }
-
-.lock-btn {
-  width: 100%; padding: 12px;
-  background: var(--accent); color: #fff;
-  border: none; border-radius: 9px;
-  font-size: 15px; font-weight: 600; font-family: inherit;
-  cursor: pointer; transition: background .15s;
-  margin-bottom: 10px;
-}
-.lock-btn:hover { background: var(--accent-hover); }
-
-.lock-err { font-size: 13px; color: var(--red); min-height: 18px; }
-
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  75% { transform: translateX(8px); }
-}
-
-/* ===== アプリ本体 ===== */
-#appScreen { display: none; }
-
-header {
-  background: var(--surface); border-bottom: 1px solid var(--border);
-  padding: 0 24px; height: 56px;
-  display: flex; align-items: center; gap: 14px;
-  position: sticky; top: 0; z-index: 50;
-}
-.h-logo {
-  width: 32px; height: 32px; background: var(--accent);
-  border-radius: 8px; display: grid; place-items: center; flex-shrink: 0;
-}
+body { font-family: 'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP',sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 50; }
+.h-logo { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; }
 .h-logo svg { width: 18px; height: 18px; }
 .h-title { font-size: 15px; font-weight: 600; }
 .h-sub { font-size: 11px; color: var(--text2); }
@@ -118,107 +23,50 @@ header {
 .dot { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; }
 .dot.ok { background: #22c55e; }
 .h-status { font-size: 12px; color: var(--text2); }
-.btn-ghost {
-  padding: 6px 14px; border: 1px solid var(--border); border-radius: 7px;
-  background: none; font-size: 13px; font-family: inherit;
-  cursor: pointer; color: var(--text); transition: border-color .15s, background .15s;
-}
+.btn-ghost { padding: 6px 14px; border: 1px solid var(--border); border-radius: 7px; background: none; font-size: 13px; font-family: inherit; cursor: pointer; color: var(--text); transition: border-color .15s, background .15s; }
 .btn-ghost:hover { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
-
-/* ===== レイアウト ===== */
-.layout {
-  max-width: 1120px; margin: 0 auto; padding: 20px 16px;
-  display: grid; grid-template-columns: 300px 1fr; gap: 16px; align-items: start;
-}
-@media (max-width: 720px) {
-  .layout { grid-template-columns: 1fr; }
-}
-
-/* ===== サイドバー ===== */
-.sidebar {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
-  position: sticky; top: 72px;
-}
-.sb-head {
-  padding: 12px 14px; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
+.layout { max-width: 1120px; margin: 0 auto; padding: 20px 16px; }
+.tabs { display: flex; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.tab-btn { flex: 1; padding: 11px; background: var(--surface); border: none; font-size: 13px; font-family: inherit; cursor: pointer; color: var(--text2); transition: background .15s, color .15s; }
+.tab-btn:first-child { border-right: 1px solid var(--border); }
+.tab-btn.active { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.show { display: block; }
+.two-col { display: grid; grid-template-columns: 300px 1fr; gap: 16px; align-items: start; }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+.sidebar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: sticky; top: 72px; }
+.sb-head { padding: 12px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .sb-label { font-size: 12px; font-weight: 600; color: var(--text2); letter-spacing: .05em; text-transform: uppercase; }
 .cnt { font-size: 12px; background: var(--surface2); color: var(--text2); padding: 2px 8px; border-radius: 100px; }
-
 .filters { padding: 10px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 7px; }
-input[type=text], select {
-  width: 100%; padding: 7px 10px; border: 1px solid var(--border); border-radius: 7px;
-  font-size: 13px; font-family: inherit; background: var(--surface); color: var(--text);
-  outline: none; transition: border-color .15s;
-}
+input[type=text], select { width: 100%; padding: 7px 10px; border: 1px solid var(--border); border-radius: 7px; font-size: 13px; font-family: inherit; background: var(--surface); color: var(--text); outline: none; transition: border-color .15s; }
 input[type=text]:focus, select:focus { border-color: var(--accent); }
-
-.co-list { max-height: 520px; overflow-y: auto; }
-.co-item {
-  padding: 9px 14px; border-bottom: 1px solid var(--border);
-  cursor: pointer; display: flex; align-items: center; gap: 8px;
-  transition: background .1s;
-}
+.co-list { max-height: 480px; overflow-y: auto; }
+.co-item { padding: 9px 14px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background .1s; }
 .co-item:last-child { border-bottom: none; }
 .co-item:hover { background: var(--surface2); }
 .co-item.active { background: var(--accent-bg); }
 .co-name { font-size: 13px; line-height: 1.45; flex: 1; }
-.co-row {
-  font-size: 10px; color: var(--text3); flex-shrink: 0;
-  background: var(--surface2); padding: 1px 6px; border-radius: 4px;
-}
+.co-row { font-size: 10px; color: var(--text3); flex-shrink: 0; background: var(--surface2); padding: 1px 6px; border-radius: 4px; }
 .co-item.active .co-row { background: #c8daf5; color: var(--accent); }
-
-/* ===== 右エリア ===== */
 .main-col { display: flex; flex-direction: column; gap: 12px; }
-
-.action-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-}
+.action-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .sel-label { font-size: 12px; color: var(--text3); }
 .sel-name { font-size: 16px; font-weight: 600; flex: 1; }
 .ph-label { font-size: 14px; color: var(--text3); flex: 1; }
-
-.btn-primary {
-  padding: 9px 22px; background: var(--accent); color: #fff;
-  border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
-  font-family: inherit; cursor: pointer; white-space: nowrap;
-  transition: background .15s, transform .1s;
-}
-.btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
-.btn-primary:active:not(:disabled) { transform: scale(.98); }
-.btn-primary:disabled { background: var(--border); color: var(--text3); cursor: not-allowed; }
-
-.result-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden; min-height: 280px;
-}
-.r-head {
-  padding: 12px 18px; border-bottom: 1px solid var(--border);
-  font-size: 12px; font-weight: 600; color: var(--text2);
-  letter-spacing: .05em; text-transform: uppercase;
-}
+.prod-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 12px; }
+.prod-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.prod-row input { flex: 1; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; font-family: inherit; background: var(--surface); color: var(--text); outline: none; transition: border-color .15s; }
+.prod-row input:focus { border-color: var(--accent); }
+.prod-hint { font-size: 12px; color: var(--text3); }
+.result-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; min-height: 280px; }
+.r-head { padding: 12px 18px; border-bottom: 1px solid var(--border); font-size: 12px; font-weight: 600; color: var(--text2); letter-spacing: .05em; text-transform: uppercase; }
 .r-body { padding: 22px; }
-
-.ph-wrap {
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: center; gap: 12px; padding: 60px 20px;
-  color: var(--text3); text-align: center;
-}
-.ph-ico { font-size: 36px; opacity: .45; }
+.ph-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 60px 20px; color: var(--text3); text-align: center; }
 .ph-txt { font-size: 14px; line-height: 1.7; }
-
 .loading { display: flex; align-items: center; gap: 12px; padding: 40px 22px; color: var(--text2); font-size: 14px; }
-.spin {
-  width: 18px; height: 18px; border: 2px solid var(--border);
-  border-top-color: var(--accent); border-radius: 50%;
-  animation: spin .7s linear infinite; flex-shrink: 0;
-}
+.spin { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
 .r-md { font-size: 14px; line-height: 1.9; color: var(--text); }
 .r-md h2 { font-size: 15px; font-weight: 600; margin: 1.3em 0 .5em; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
 .r-md h3 { font-size: 14px; font-weight: 600; margin: 1em 0 .4em; }
@@ -226,68 +74,58 @@ input[type=text]:focus, select:focus { border-color: var(--accent); }
 .r-md li { margin: 3px 0; }
 .r-md p { margin: .5em 0; }
 .r-md strong { font-weight: 600; }
-
-.err-box {
-  background: var(--red-bg); border: 1px solid #fecaca; border-radius: 8px;
-  padding: 14px 16px; font-size: 14px; color: var(--red); line-height: 1.65;
-}
-
-/* ===== APIキー設定モーダル ===== */
-.overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.45);
-  z-index: 200; display: grid; place-items: center; padding: 20px;
-}
+.err-box { background: var(--red-bg); border: 1px solid #fecaca; border-radius: 8px; padding: 14px 16px; font-size: 14px; color: var(--red); line-height: 1.65; }
+.btn-primary { padding: 9px 22px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap; transition: background .15s, transform .1s; }
+.btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+.btn-primary:active:not(:disabled) { transform: scale(.98); }
+.btn-primary:disabled { background: var(--border); color: var(--text3); cursor: not-allowed; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; display: grid; place-items: center; padding: 20px; }
 .overlay.hidden { display: none; }
-.modal {
-  background: var(--surface); border-radius: 14px;
-  width: 100%; max-width: 440px; padding: 28px;
-}
+.modal { background: var(--surface); border-radius: 14px; width: 100%; max-width: 440px; padding: 28px; }
 .modal h2 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
 .modal-sub { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 14px; }
 .modal-sub a { color: var(--accent); }
-.modal-warn {
-  background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px;
-  padding: 10px 14px; font-size: 13px; color: #78350f; line-height: 1.6; margin-bottom: 14px;
-}
-.modal input[type=password] {
-  width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
-  font-size: 14px; font-family: inherit; margin-bottom: 14px; outline: none;
-  transition: border-color .15s;
-}
+.modal-warn { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #78350f; line-height: 1.6; margin-bottom: 14px; }
+.modal input[type=password] { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; margin-bottom: 14px; outline: none; transition: border-color .15s; }
 .modal input:focus { border-color: var(--accent); }
 .modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
-.btn-cancel {
-  padding: 8px 18px; background: none; border: 1px solid var(--border);
-  border-radius: 8px; font-size: 13px; font-family: inherit; cursor: pointer; color: var(--text2);
-}
+.btn-cancel { padding: 8px 18px; background: none; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; cursor: pointer; color: var(--text2); }
 .btn-cancel:hover { border-color: var(--border2); }
-.btn-save {
-  padding: 8px 18px; background: var(--accent); color: #fff;
-  border: none; border-radius: 8px; font-size: 13px; font-weight: 600;
-  font-family: inherit; cursor: pointer;
-}
+.btn-save { padding: 8px 18px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; }
 .btn-save:hover { background: var(--accent-hover); }
+#lockScreen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.lock-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 44px 40px 36px; width: 100%; max-width: 380px; text-align: center; }
+.lock-icon { width: 60px; height: 60px; background: var(--accent-bg); border-radius: 16px; display: grid; place-items: center; margin: 0 auto 22px; }
+.lock-icon svg { width: 30px; height: 30px; }
+.lock-card h1 { font-size: 19px; font-weight: 600; margin-bottom: 8px; }
+.lock-desc { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 28px; }
+.pw-wrap { position: relative; margin-bottom: 10px; }
+.pw-wrap input { width: 100%; padding: 11px 44px 11px 14px; border: 1px solid var(--border); border-radius: 9px; font-size: 15px; font-family: inherit; outline: none; transition: border-color .15s; background: var(--surface); color: var(--text); }
+.pw-wrap input:focus { border-color: var(--accent); }
+.pw-wrap input.error { border-color: #f87171; animation: shake .3s ease; }
+.eye-btn { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text3); padding: 4px; line-height: 0; }
+.lock-btn { width: 100%; padding: 12px; background: var(--accent); color: #fff; border: none; border-radius: 9px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background .15s; margin-bottom: 10px; }
+.lock-btn:hover { background: var(--accent-hover); }
+.lock-err { font-size: 13px; color: var(--red); min-height: 18px; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
 </style>
 </head>
 <body>
 
-<!-- パスワード画面 -->
 <div id="lockScreen">
   <div class="lock-card">
     <div class="lock-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="#1a55a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="11" width="18" height="11" rx="2"/>
-        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
       </svg>
     </div>
     <h1>取扱メーカー 製品検索</h1>
     <p class="lock-desc">社内向けツールです。<br>担当者からパスワードを受け取ってください。</p>
     <div class="pw-wrap">
       <input type="password" id="pwInput" placeholder="パスワードを入力" autocomplete="current-password" />
-      <button class="eye-btn" id="eyeBtn" tabindex="-1" aria-label="パスワード表示切替">
+      <button class="eye-btn" id="eyeBtn" tabindex="-1">
         <svg id="eyeSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-          <circle cx="12" cy="12" r="3"/>
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
         </svg>
       </button>
     </div>
@@ -296,18 +134,16 @@ input[type=text]:focus, select:focus { border-color: var(--accent); }
   </div>
 </div>
 
-<!-- アプリ本体 -->
-<div id="appScreen">
+<div id="appScreen" style="display:none;">
   <header>
     <div class="h-logo">
       <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
-        <circle cx="11" cy="11" r="7"/>
-        <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
       </svg>
     </div>
     <div>
       <div class="h-title">取扱メーカー 製品検索</div>
-      <div class="h-sub">会社を選んで製品情報をAI検索</div>
+      <div class="h-sub">会社名・製品名どちらからでも検索できます</div>
     </div>
     <div class="h-right">
       <div class="dot" id="dot"></div>
@@ -317,58 +153,67 @@ input[type=text]:focus, select:focus { border-color: var(--accent); }
   </header>
 
   <div class="layout">
-    <div class="sidebar">
-      <div class="sb-head">
-        <span class="sb-label">会社一覧</span>
-        <span class="cnt" id="cntEl">0社</span>
-      </div>
-      <div class="filters">
-        <input type="text" id="searchInput" placeholder="会社名で絞り込み…" />
-        <select id="rowSel">
-          <option value="">すべての行</option>
-          <option value="ア">ア行</option>
-          <option value="カ">カ行</option>
-          <option value="サ">サ行</option>
-          <option value="タ">タ行</option>
-          <option value="ナ">ナ行</option>
-          <option value="ハ">ハ行</option>
-          <option value="マ">マ行</option>
-          <option value="ヤ">ヤ行</option>
-          <option value="ラ">ラ行</option>
-          <option value="ワ">ワ行</option>
-          <option value="英">英数字</option>
-        </select>
-      </div>
-      <div class="co-list" id="coList"></div>
+    <div class="tabs">
+      <button class="tab-btn active" id="tab1" onclick="switchTab('company')">🏭 会社名 → 製品を調べる</button>
+      <button class="tab-btn" id="tab2" onclick="switchTab('product')">🔍 製品名 → 会社を探す</button>
     </div>
 
-    <div class="main-col">
-      <div class="action-card" id="actionCard">
-        <span class="ph-label">← 左の一覧から会社を選択してください</span>
-        <button class="btn-primary" disabled>製品を検索</button>
+    <div class="tab-panel show" id="panelCompany">
+      <div class="two-col">
+        <div class="sidebar">
+          <div class="sb-head">
+            <span class="sb-label">会社一覧</span>
+            <span class="cnt" id="cntEl">0社</span>
+          </div>
+          <div class="filters">
+            <input type="text" id="searchInput" placeholder="会社名で絞り込み…" />
+            <select id="rowSel">
+              <option value="">すべての行</option>
+              <option value="ア">ア行</option><option value="カ">カ行</option><option value="サ">サ行</option>
+              <option value="タ">タ行</option><option value="ナ">ナ行</option><option value="ハ">ハ行</option>
+              <option value="マ">マ行</option><option value="ヤ">ヤ行</option><option value="ラ">ラ行</option>
+              <option value="ワ">ワ行</option><option value="英">英数字</option>
+            </select>
+          </div>
+          <div class="co-list" id="coList"></div>
+        </div>
+        <div class="main-col">
+          <div class="action-card" id="actionCard">
+            <span class="ph-label">← 左の一覧から会社を選択してください</span>
+            <button class="btn-primary" disabled>製品を検索</button>
+          </div>
+          <div class="result-card">
+            <div class="r-head" id="rHead1">検索結果</div>
+            <div class="r-body" id="rBody1">
+              <div class="ph-wrap"><div class="ph-txt">会社を選択して「製品を検索」を押すと<br>AIがウェブ検索で製品情報をまとめます</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panelProduct">
+      <div class="prod-panel">
+        <div class="prod-row">
+          <input type="text" id="prodInput" placeholder="例：空気圧シリンダ、リニアガイド、タッチパネル、溶接機…" />
+          <button class="btn-primary" onclick="searchByProduct()">会社を探す</button>
+        </div>
+        <div class="prod-hint">製品名・カテゴリ・用途キーワードで取扱会社を探せます。Enterキーでも検索できます。</div>
       </div>
       <div class="result-card">
-        <div class="r-head" id="rHead">検索結果</div>
-        <div class="r-body" id="rBody">
-          <div class="ph-wrap">
-            <div class="ph-ico">🏭</div>
-            <div class="ph-txt">会社を選択して「製品を検索」を押すと<br>AIがウェブ検索で製品情報をまとめます</div>
-          </div>
+        <div class="r-head" id="rHead2">検索結果</div>
+        <div class="r-body" id="rBody2">
+          <div class="ph-wrap"><div class="ph-txt">製品名やキーワードを入力して<br>「会社を探す」を押してください</div></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- APIキー設定モーダル -->
 <div class="overlay hidden" id="overlay">
   <div class="modal">
     <h2>APIキー設定</h2>
-    <p class="modal-sub">
-      Anthropic（Claude）のAPIキーを入力してください。<br>
-      <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> で取得できます。<br>
-      キーはこのブラウザにのみ保存されます。
-    </p>
+    <p class="modal-sub">Anthropic（Claude）のAPIキーを入力してください。<br><a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> で取得できます。<br>キーはこのブラウザにのみ保存されます。</p>
     <div class="modal-warn">⚠️ 1回の検索につき約0.2〜0.5円の費用が発生します。</div>
     <input type="password" id="keyInput" placeholder="sk-ant-api03-…" />
     <div class="modal-btns">
@@ -381,167 +226,141 @@ input[type=text]:focus, select:focus { border-color: var(--accent); }
 <script src="companies.js"></script>
 <script src="config.js"></script>
 <script>
-// ==============================
-// パスワード認証
-// ==============================
-const SESSION_KEY = 'maker_auth_v1';
+const SESSION_KEY='maker_auth_v1';
+const ROW_MAP={ア:'ア',イ:'ア',ウ:'ア',エ:'ア',オ:'ア',カ:'カ',キ:'カ',ク:'カ',ケ:'カ',コ:'カ',サ:'サ',シ:'サ',ス:'サ',セ:'サ',ソ:'サ',タ:'タ',チ:'タ',ツ:'タ',テ:'タ',ト:'タ',ナ:'ナ',ニ:'ナ',ヌ:'ナ',ネ:'ナ',ノ:'ナ',ハ:'ハ',ヒ:'ハ',フ:'ハ',ヘ:'ハ',ホ:'ハ',マ:'マ',ミ:'マ',ム:'マ',メ:'マ',モ:'マ',ヤ:'ヤ',ユ:'ヤ',ヨ:'ヤ',ラ:'ラ',リ:'ラ',ル:'ラ',レ:'ラ',ロ:'ラ',ワ:'ワ',ヲ:'ワ',ン:'ワ'};
+function getRow(n){const c=n.replace(/^[㈱㈲（(株式会社有限会社]+/,'').charAt(0);return ROW_MAP[c]||'英';}
 
-function tryUnlock() {
-  const val = document.getElementById('pwInput').value;
-  if (val === SITE_PASSWORD) {
-    sessionStorage.setItem(SESSION_KEY, '1');
-    document.getElementById('lockScreen').style.display = 'none';
-    document.getElementById('appScreen').style.display = 'block';
+function tryUnlock(){
+  const val=document.getElementById('pwInput').value;
+  if(val===SITE_PASSWORD){
+    sessionStorage.setItem(SESSION_KEY,'1');
+    document.getElementById('lockScreen').style.display='none';
+    document.getElementById('appScreen').style.display='block';
     initApp();
   } else {
-    const inp = document.getElementById('pwInput');
-    document.getElementById('lockErr').textContent = 'パスワードが違います';
-    inp.classList.remove('error');
-    void inp.offsetWidth;
-    inp.classList.add('error');
-    inp.value = '';
-    inp.focus();
+    const inp=document.getElementById('pwInput');
+    document.getElementById('lockErr').textContent='パスワードが違います';
+    inp.classList.remove('error'); void inp.offsetWidth; inp.classList.add('error');
+    inp.value=''; inp.focus();
   }
 }
-
-document.getElementById('lockBtn').addEventListener('click', tryUnlock);
-document.getElementById('pwInput').addEventListener('keydown', e => {
-  document.getElementById('lockErr').textContent = '';
-  if (e.key === 'Enter') tryUnlock();
+document.getElementById('lockBtn').addEventListener('click',tryUnlock);
+document.getElementById('pwInput').addEventListener('keydown',e=>{document.getElementById('lockErr').textContent='';if(e.key==='Enter')tryUnlock();});
+let pwShow=false;
+document.getElementById('eyeBtn').addEventListener('click',()=>{
+  pwShow=!pwShow;
+  document.getElementById('pwInput').type=pwShow?'text':'password';
+  document.getElementById('eyeSvg').innerHTML=pwShow
+    ?'<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    :'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
 });
-
-// パスワード表示切替
-let pwShow = false;
-document.getElementById('eyeBtn').addEventListener('click', () => {
-  pwShow = !pwShow;
-  document.getElementById('pwInput').type = pwShow ? 'text' : 'password';
-  document.getElementById('eyeSvg').innerHTML = pwShow
-    ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-       <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-       <line x1="1" y1="1" x2="23" y2="23"/>`
-    : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
-});
-
-// セッション継続チェック
-if (sessionStorage.getItem(SESSION_KEY) === '1') {
-  document.getElementById('lockScreen').style.display = 'none';
-  document.getElementById('appScreen').style.display = 'block';
+if(sessionStorage.getItem(SESSION_KEY)==='1'){
+  document.getElementById('lockScreen').style.display='none';
+  document.getElementById('appScreen').style.display='block';
   initApp();
 }
 
-// ==============================
-// アプリ本体
-// ==============================
-function initApp() {
-  let selected = null;
-  let apiKey = localStorage.getItem('maker_api_key') || '';
-  if (!apiKey && typeof EMBEDDED_API_KEY !== 'undefined' && EMBEDDED_API_KEY)
-    apiKey = EMBEDDED_API_KEY;
+function initApp(){
+  let selected=null;
+  let apiKey=localStorage.getItem('maker_api_key')||'';
+  if(!apiKey&&typeof EMBEDDED_API_KEY!=='undefined'&&EMBEDDED_API_KEY) apiKey=EMBEDDED_API_KEY;
 
-  const ROW_MAP = {ア:'ア',イ:'ア',ウ:'ア',エ:'ア',オ:'ア',カ:'カ',キ:'カ',ク:'カ',ケ:'カ',コ:'カ',サ:'サ',シ:'サ',ス:'サ',セ:'サ',ソ:'サ',タ:'タ',チ:'タ',ツ:'タ',テ:'タ',ト:'タ',ナ:'ナ',ニ:'ナ',ヌ:'ナ',ネ:'ナ',ノ:'ナ',ハ:'ハ',ヒ:'ハ',フ:'ハ',ヘ:'ハ',ホ:'ハ',マ:'マ',ミ:'マ',ム:'マ',メ:'マ',モ:'マ',ヤ:'ヤ',ユ:'ヤ',ヨ:'ヤ',ラ:'ラ',リ:'ラ',ル:'ラ',レ:'ラ',ロ:'ラ',ワ:'ワ',ヲ:'ワ',ン:'ワ'};
-
-  function getRow(n) {
-    const c = n.replace(/^[㈱㈲（(株式会社有限会社]+/, '').charAt(0);
-    return ROW_MAP[c] || '英';
-  }
-
-  function render() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    const r = document.getElementById('rowSel').value;
-    const list = COMPANIES.filter(c => (!q || c.toLowerCase().includes(q)) && (!r || getRow(c) === r));
-    document.getElementById('cntEl').textContent = list.length + '社';
-    document.getElementById('coList').innerHTML = list.map(c => `
+  function render(){
+    const q=document.getElementById('searchInput').value.toLowerCase();
+    const r=document.getElementById('rowSel').value;
+    const list=COMPANIES.filter(c=>(!q||c.toLowerCase().includes(q))&&(!r||getRow(c)===r));
+    document.getElementById('cntEl').textContent=list.length+'社';
+    document.getElementById('coList').innerHTML=list.map(c=>`
       <div class="co-item${selected===c?' active':''}" onclick="pickCo('${c.replace(/'/g,"\\'")}')">
-        <span class="co-name">${c}</span>
-        <span class="co-row">${getRow(c)}行</span>
+        <span class="co-name">${c}</span><span class="co-row">${getRow(c)}行</span>
       </div>`).join('');
   }
 
-  window.pickCo = function(name) {
-    selected = name;
-    document.getElementById('actionCard').innerHTML = `
-      <div style="flex:1">
-        <div class="sel-label">選択中の会社</div>
-        <div class="sel-name">${name}</div>
-      </div>
+  window.pickCo=function(name){
+    selected=name;
+    document.getElementById('actionCard').innerHTML=`
+      <div style="flex:1"><div class="sel-label">選択中の会社</div><div class="sel-name">${name}</div></div>
       <button class="btn-primary" onclick="doSearch()">製品を検索</button>`;
     render();
   };
 
-  window.doSearch = async function() {
-    if (!selected) return;
-    if (!apiKey) { openModal(); return; }
-
-    document.getElementById('rHead').textContent = selected + ' の製品情報';
-    document.getElementById('rBody').innerHTML = `
-      <div class="loading"><div class="spin"></div>AIがウェブ検索で製品情報を調べています…</div>`;
-
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1500,
-          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-          messages: [{
-            role: 'user',
-            content: `${selected}（日本のメーカー・商社）の製品・取扱製品について日本語でまとめてください。\n\n## 会社概要\n## 主要製品カテゴリ\n## 代表的な製品・シリーズ\n## 主な用途・対象業界\n## 特徴・強み`
-          }]
-        })
-      });
-      if (!res.ok) {
-        const e = await res.json().catch(()=>({}));
-        throw new Error(e.error?.message || `HTTPエラー ${res.status}`);
-      }
-      const data = await res.json();
-      const text = data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n');
-      document.getElementById('rBody').innerHTML = `<div class="r-md">${toHtml(text)}</div>`;
-    } catch(e) {
-      document.getElementById('rBody').innerHTML = `
-        <div class="err-box"><strong>エラー</strong><br>${e.message}<br><br>「⚙ 設定」からAPIキーを確認してください。</div>`;
-    }
+  window.switchTab=function(t){
+    document.getElementById('tab1').classList.toggle('active',t==='company');
+    document.getElementById('tab2').classList.toggle('active',t==='product');
+    document.getElementById('panelCompany').classList.toggle('show',t==='company');
+    document.getElementById('panelProduct').classList.toggle('show',t==='product');
   };
 
-  function toHtml(s) {
-    return s
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+  window.doSearch=async function(){
+    if(!selected)return;
+    if(!apiKey){openModal();return;}
+    document.getElementById('rHead1').textContent=selected+' の製品情報';
+    document.getElementById('rBody1').innerHTML='<div class="loading"><div class="spin"></div>AIがウェブ検索で製品情報を調べています…</div>';
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}],
+          messages:[{role:'user',content:`${selected}（日本のメーカー・商社）の取扱製品について日本語でまとめてください。\n## 会社概要\n## 主要製品カテゴリ\n## 代表的な製品・シリーズ\n## 主な用途・対象業界\n## 特徴・強み`}]})
+      });
+      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTPエラー ${res.status}`);}
+      const data=await res.json();
+      const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n');
+      document.getElementById('rBody1').innerHTML='<div class="r-md">'+toHtml(text)+'</div>';
+    }catch(e){document.getElementById('rBody1').innerHTML=`<div class="err-box"><strong>エラー</strong><br>${e.message}</div>`;}
+  };
+
+  window.searchByProduct=async function(){
+    const kw=document.getElementById('prodInput').value.trim();
+    if(!kw)return;
+    if(!apiKey){openModal();return;}
+    document.getElementById('rHead2').textContent='「'+kw+'」を取り扱う会社';
+    document.getElementById('rBody2').innerHTML='<div class="loading"><div class="spin"></div>AIが検索中です…</div>';
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}],
+          messages:[{role:'user',content:`以下は取扱メーカーの一覧です：\n${COMPANIES.join('、')}\n\n上記の中で「${kw}」を取り扱っている可能性が高い会社を教えてください。ウェブ検索で各社の製品情報を確認し、日本語で回答してください。\n\n## 該当する可能性が高い会社\n（会社名と関連製品の説明を箇条書きで）\n\n## 補足情報`}]})
+      });
+      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTPエラー ${res.status}`);}
+      const data=await res.json();
+      const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n');
+      document.getElementById('rBody2').innerHTML='<div class="r-md">'+toHtml(text)+'</div>';
+    }catch(e){document.getElementById('rBody2').innerHTML=`<div class="err-box"><strong>エラー</strong><br>${e.message}</div>`;}
+  };
+
+  document.getElementById('prodInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchByProduct();});
+
+  function toHtml(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
       .replace(/^###\s(.+)$/gm,'<h3>$1</h3>').replace(/^##\s(.+)$/gm,'<h2>$1</h2>').replace(/^#\s(.+)$/gm,'<h2>$1</h2>')
-      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/`(.+?)`/g,'<code>$1</code>')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
       .replace(/^[\-\*]\s(.+)$/gm,'<li>$1</li>').replace(/^\d+\.\s(.+)$/gm,'<li>$1</li>')
       .replace(/(<li>[\s\S]*?<\/li>)/g,'<ul>$1</ul>')
       .replace(/\n{2,}/g,'</p><p>').replace(/^(?!<[hup\/li])/gm,'<p>').replace(/<p>\s*<\/p>/g,'');
   }
 
-  function updateDot() {
-    document.getElementById('dot').classList.toggle('ok', !!apiKey);
-    document.getElementById('hStatus').textContent = apiKey ? 'APIキー設定済み' : 'APIキー未設定';
+  function updateDot(){
+    document.getElementById('dot').classList.toggle('ok',!!apiKey);
+    document.getElementById('hStatus').textContent=apiKey?'APIキー設定済み':'APIキー未設定';
   }
-
-  function openModal() {
-    document.getElementById('keyInput').value = apiKey;
+  function openModal(){
+    document.getElementById('keyInput').value=apiKey;
     document.getElementById('overlay').classList.remove('hidden');
     setTimeout(()=>document.getElementById('keyInput').focus(),50);
   }
-
-  document.getElementById('settingBtn').addEventListener('click', openModal);
-  document.getElementById('cancelBtn').addEventListener('click', ()=>document.getElementById('overlay').classList.add('hidden'));
-  document.getElementById('saveBtn').addEventListener('click', ()=>{
-    const v = document.getElementById('keyInput').value.trim();
-    if (v) { apiKey = v; localStorage.setItem('maker_api_key', v); updateDot(); }
+  document.getElementById('settingBtn').addEventListener('click',openModal);
+  document.getElementById('cancelBtn').addEventListener('click',()=>document.getElementById('overlay').classList.add('hidden'));
+  document.getElementById('saveBtn').addEventListener('click',()=>{
+    const v=document.getElementById('keyInput').value.trim();
+    if(v){apiKey=v;localStorage.setItem('maker_api_key',v);updateDot();}
     document.getElementById('overlay').classList.add('hidden');
-    if (selected && v) doSearch();
   });
-  document.getElementById('keyInput').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('saveBtn').click(); });
-  document.getElementById('overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('overlay')) document.getElementById('overlay').classList.add('hidden'); });
-  document.getElementById('searchInput').addEventListener('input', render);
-  document.getElementById('rowSel').addEventListener('change', render);
-
+  document.getElementById('keyInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('saveBtn').click();});
+  document.getElementById('overlay').addEventListener('click',e=>{if(e.target===document.getElementById('overlay'))document.getElementById('overlay').classList.add('hidden');});
+  document.getElementById('searchInput').addEventListener('input',render);
+  document.getElementById('rowSel').addEventListener('change',render);
   updateDot();
   render();
 }
