@@ -1,0 +1,30 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: config.js をSecretsから生成
+        run: |
+          cat > config.js << 'ENDOFFILE'
+          const SITE_PASSWORD = "${{ secrets.SITE_PASSWORD }}";
+          const EMBEDDED_API_KEY = "${{ secrets.ANTHROPIC_API_KEY }}";
+          ENDOFFILE
+
+      - name: GitHub Pages にデプロイ
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          exclude_assets: '.github,README.md'
