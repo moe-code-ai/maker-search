@@ -1,0 +1,33 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: config.js を生成
+        run: |
+          echo "const SITE_PASSWORD = \"${{ secrets.SITE_PASSWORD }}\";" > config.js
+          echo "const EMBEDDED_API_KEY = \"${{ secrets.ANTHROPIC_API_KEY }}\";" >> config.js
+
+      - name: gh-pagesブランチにデプロイ
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -f config.js
+          git stash
+          git fetch origin gh-pages 2>/dev/null && git checkout gh-pages || git checkout --orphan gh-pages
+          git checkout stash -- .
+          git add -A
+          git commit -m "Deploy"
+          git push origin gh-pages --force
