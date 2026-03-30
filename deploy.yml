@@ -3,28 +3,31 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  workflow_dispatch:  # 手動実行ボタンも使えるようにする
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      - name: リポジトリをチェックアウト
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: config.js をSecretsから生成
+      - name: config.js を生成（パスワードのみ）
         run: |
-          cat > config.js << 'ENDOFFILE'
-          const SITE_PASSWORD = "${{ secrets.SITE_PASSWORD }}";
-          const EMBEDDED_API_KEY = "${{ secrets.ANTHROPIC_API_KEY }}";
-          ENDOFFILE
+          echo "const SITE_PASSWORD = \"${{ secrets.SITE_PASSWORD }}\";" > config.js
+          echo "const EMBEDDED_API_KEY = \"\";" >> config.js
 
-      - name: GitHub Pages にデプロイ
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-          exclude_assets: '.github,README.md'
+      - name: gh-pagesブランチにデプロイ
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -f config.js
+          git stash
+          git fetch origin gh-pages 2>/dev/null && git checkout gh-pages || git checkout --orphan gh-pages
+          git checkout stash -- .
+          git add -A
+          git diff --cached --quiet && echo "No changes" || git commit -m "Deploy"
+          git push origin gh-pages --force
