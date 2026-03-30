@@ -300,7 +300,7 @@ function initApp(){
       const res=await fetch('https://api.anthropic.com/v1/messages',{
         method:'POST',
         headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}],
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}],
           messages:[{role:'user',content:`${selected}（日本のメーカー・商社）の取扱製品について日本語でまとめてください。\n## 会社概要\n## 主要製品カテゴリ\n## 代表的な製品・シリーズ\n## 主な用途・対象業界\n## 特徴・強み`}]})
       });
       if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTPエラー ${res.status}`);}
