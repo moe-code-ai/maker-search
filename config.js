@@ -1,2 +1,2 @@
 const SITE_PASSWORD = "Tsuzuku0610";
-const EMBEDDED_API_KEY = "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";
+const EMBEDDED_API_KEY = "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";
