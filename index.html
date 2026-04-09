@@ -226,140 +226,211 @@ input[type=text]:focus, select:focus { border-color: var(--accent); }
 <script src="companies.js"></script>
 <script src="config.js"></script>
 <script>
-const SESSION_KEY='maker_auth_v1';
-const ROW_MAP={ア:'ア',イ:'ア',ウ:'ア',エ:'ア',オ:'ア',カ:'カ',キ:'カ',ク:'カ',ケ:'カ',コ:'カ',サ:'サ',シ:'サ',ス:'サ',セ:'サ',ソ:'サ',タ:'タ',チ:'タ',ツ:'タ',テ:'タ',ト:'タ',ナ:'ナ',ニ:'ナ',ヌ:'ナ',ネ:'ナ',ノ:'ナ',ハ:'ハ',ヒ:'ハ',フ:'ハ',ヘ:'ハ',ホ:'ハ',マ:'マ',ミ:'マ',ム:'マ',メ:'マ',モ:'マ',ヤ:'ヤ',ユ:'ヤ',ヨ:'ヤ',ラ:'ラ',リ:'ラ',ル:'ラ',レ:'ラ',ロ:'ラ',ワ:'ワ',ヲ:'ワ',ン:'ワ'};
-function getRow(n){const c=n.replace(/^[㈱㈲（(株式会社有限会社]+/,'').charAt(0);return ROW_MAP[c]||'英';}
+const SESSION_KEY = 'maker_auth_v1';
+const ROW_MAP = {ア:'ア',イ:'ア',ウ:'ア',エ:'ア',オ:'ア',カ:'カ',キ:'カ',ク:'カ',ケ:'カ',コ:'カ',サ:'サ',シ:'サ',ス:'サ',セ:'サ',ソ:'サ',タ:'タ',チ:'タ',ツ:'タ',テ:'タ',ト:'タ',ナ:'ナ',ニ:'ナ',ヌ:'ナ',ネ:'ナ',ノ:'ナ',ハ:'ハ',ヒ:'ハ',フ:'ハ',ヘ:'ハ',ホ:'ハ',マ:'マ',ミ:'マ',ム:'マ',メ:'マ',モ:'マ',ヤ:'ヤ',ユ:'ヤ',ヨ:'ヤ',ラ:'ラ',リ:'ラ',ル:'ラ',レ:'ラ',ロ:'ラ',ワ:'ワ',ヲ:'ワ',ン:'ワ'};
 
-function tryUnlock(){
-  const val=document.getElementById('pwInput').value;
-  if(val===SITE_PASSWORD){
-    sessionStorage.setItem(SESSION_KEY,'1');
-    document.getElementById('lockScreen').style.display='none';
-    document.getElementById('appScreen').style.display='block';
+function getRow(n) {
+  const c = n.replace(/^[㈱㈲（(株式会社有限会社]+/, '').charAt(0);
+  return ROW_MAP[c] || '英';
+}
+
+function tryUnlock() {
+  const val = document.getElementById('pwInput').value;
+  if (val === SITE_PASSWORD) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
     initApp();
   } else {
-    const inp=document.getElementById('pwInput');
-    document.getElementById('lockErr').textContent='パスワードが違います';
-    inp.classList.remove('error'); void inp.offsetWidth; inp.classList.add('error');
-    inp.value=''; inp.focus();
+    const inp = document.getElementById('pwInput');
+    document.getElementById('lockErr').textContent = 'パスワードが違います';
+    inp.classList.remove('error');
+    void inp.offsetWidth;
+    inp.classList.add('error');
+    inp.value = '';
+    inp.focus();
   }
 }
-document.getElementById('lockBtn').addEventListener('click',tryUnlock);
-document.getElementById('pwInput').addEventListener('keydown',e=>{document.getElementById('lockErr').textContent='';if(e.key==='Enter')tryUnlock();});
-let pwShow=false;
-document.getElementById('eyeBtn').addEventListener('click',()=>{
-  pwShow=!pwShow;
-  document.getElementById('pwInput').type=pwShow?'text':'password';
-  document.getElementById('eyeSvg').innerHTML=pwShow
-    ?'<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
-    :'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+
+document.getElementById('lockBtn').addEventListener('click', tryUnlock);
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  document.getElementById('lockErr').textContent = '';
+  if (e.key === 'Enter') tryUnlock();
 });
-if(sessionStorage.getItem(SESSION_KEY)==='1'){
-  document.getElementById('lockScreen').style.display='none';
-  document.getElementById('appScreen').style.display='block';
+
+var pwShow = false;
+document.getElementById('eyeBtn').addEventListener('click', function() {
+  pwShow = !pwShow;
+  document.getElementById('pwInput').type = pwShow ? 'text' : 'password';
+  document.getElementById('eyeSvg').innerHTML = pwShow
+    ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+});
+
+if (sessionStorage.getItem(SESSION_KEY) === '1') {
+  document.getElementById('lockScreen').style.display = 'none';
+  document.getElementById('appScreen').style.display = 'block';
   initApp();
 }
 
-function initApp(){
-  let selected=null;
-  let apiKey=localStorage.getItem('maker_api_key')||'';
-  if(!apiKey&&typeof EMBEDDED_API_KEY!=='undefined'&&EMBEDDED_API_KEY) apiKey=EMBEDDED_API_KEY;
-
-  function render(){
-    const q=document.getElementById('searchInput').value.toLowerCase();
-    const r=document.getElementById('rowSel').value;
-    const list=COMPANIES.filter(c=>(!q||c.toLowerCase().includes(q))&&(!r||getRow(c)===r));
-    document.getElementById('cntEl').textContent=list.length+'社';
-    document.getElementById('coList').innerHTML=list.map(c=>`
-      <div class="co-item${selected===c?' active':''}" onclick="pickCo('${c.replace(/'/g,"\\'")}')">
-        <span class="co-name">${c}</span><span class="co-row">${getRow(c)}行</span>
-      </div>`).join('');
+function initApp() {
+  var selected = null;
+  var apiKey = localStorage.getItem('maker_api_key') || '';
+  if (!apiKey && typeof EMBEDDED_API_KEY !== 'undefined' && EMBEDDED_API_KEY) {
+    apiKey = EMBEDDED_API_KEY;
   }
 
-  window.pickCo=function(name){
-    selected=name;
-    document.getElementById('actionCard').innerHTML=`
-      <div style="flex:1"><div class="sel-label">選択中の会社</div><div class="sel-name">${name}</div></div>
-      <button class="btn-primary" onclick="doSearch()">製品を検索</button>`;
+  function render() {
+    var q = document.getElementById('searchInput').value.toLowerCase();
+    var r = document.getElementById('rowSel').value;
+    var list = COMPANIES.filter(function(c) {
+      return (!q || c.toLowerCase().indexOf(q) !== -1) && (!r || getRow(c) === r);
+    });
+    document.getElementById('cntEl').textContent = list.length + '社';
+    document.getElementById('coList').innerHTML = list.map(function(c) {
+      return '<div class="co-item' + (selected === c ? ' active' : '') + '" onclick="pickCo(\'' + c.replace(/'/g, "\\'") + '\')">'
+        + '<span class="co-name">' + c + '</span>'
+        + '<span class="co-row">' + getRow(c) + '行</span>'
+        + '</div>';
+    }).join('');
+  }
+
+  window.pickCo = function(name) {
+    selected = name;
+    document.getElementById('actionCard').innerHTML =
+      '<div style="flex:1"><div class="sel-label">選択中の会社</div><div class="sel-name">' + name + '</div></div>'
+      + '<button class="btn-primary" onclick="doSearch()">製品を検索</button>';
     render();
   };
 
-  window.switchTab=function(t){
-    document.getElementById('tab1').classList.toggle('active',t==='company');
-    document.getElementById('tab2').classList.toggle('active',t==='product');
-    document.getElementById('panelCompany').classList.toggle('show',t==='company');
-    document.getElementById('panelProduct').classList.toggle('show',t==='product');
+  window.switchTab = function(t) {
+    document.getElementById('tab1').classList.toggle('active', t === 'company');
+    document.getElementById('tab2').classList.toggle('active', t === 'product');
+    document.getElementById('panelCompany').classList.toggle('show', t === 'company');
+    document.getElementById('panelProduct').classList.toggle('show', t === 'product');
   };
 
-  window.doSearch=async function(){
-    if(!selected)return;
-    if(!apiKey){openModal();return;}
-    document.getElementById('rHead1').textContent=selected+' の製品情報';
-    document.getElementById('rBody1').innerHTML='<div class="loading"><div class="spin"></div>AIがウェブ検索で製品情報を調べています…</div>';
-    try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}],
-          messages:[{role:'user',content:`${selected}（日本のメーカー・商社）の取扱製品について日本語でまとめてください。\n## 会社概要\n## 主要製品カテゴリ\n## 代表的な製品・シリーズ\n## 主な用途・対象業界\n## 特徴・強み`}]})
+  window.doSearch = async function() {
+    if (!selected) return;
+    if (!apiKey) { openModal(); return; }
+    document.getElementById('rHead1').textContent = selected + ' の製品情報';
+    document.getElementById('rBody1').innerHTML = '<div class="loading"><div class="spin"></div>AIがウェブ検索で製品情報を調べています…</div>';
+    try {
+      var res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-5',
+          max_tokens: 1500,
+          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+          messages: [{
+            role: 'user',
+            content: selected + '（日本のメーカー・商社）の取扱製品について日本語でまとめてください。\n## 会社概要\n## 主要製品カテゴリ\n## 代表的な製品・シリーズ\n## 主な用途・対象業界\n## 特徴・強み'
+          }]
+        })
       });
-      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTPエラー ${res.status}`);}
-      const data=await res.json();
-      const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n');
-      document.getElementById('rBody1').innerHTML='<div class="r-md">'+toHtml(text)+'</div>';
-    }catch(e){document.getElementById('rBody1').innerHTML=`<div class="err-box"><strong>エラー</strong><br>${e.message}</div>`;}
+      if (!res.ok) {
+        var e = await res.json().catch(function() { return {}; });
+        throw new Error(e.error ? e.error.message : 'HTTPエラー ' + res.status);
+      }
+      var data = await res.json();
+      var text = data.content.filter(function(b) { return b.type === 'text'; }).map(function(b) { return b.text; }).join('\n');
+      document.getElementById('rBody1').innerHTML = '<div class="r-md">' + toHtml(text) + '</div>';
+    } catch(e) {
+      document.getElementById('rBody1').innerHTML = '<div class="err-box"><strong>エラー</strong><br>' + e.message + '</div>';
+    }
   };
 
-  window.searchByProduct=async function(){
-    const kw=document.getElementById('prodInput').value.trim();
-    if(!kw)return;
-    if(!apiKey){openModal();return;}
-    document.getElementById('rHead2').textContent='「'+kw+'」を取り扱う会社';
-    document.getElementById('rBody2').innerHTML='<div class="loading"><div class="spin"></div>AIが検索中です…</div>';
-    try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}],
-          messages:[{role:'user',content:`「${kw}」を取り扱っている日本のメーカー・商社を教えてください。ウェブ検索で調べて日本語で回答してください。\n\n## 該当する可能性が高い会社\n（会社名と関連製品の説明を箇条書きで）\n\n## 補足情報`}]})
-      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTPエラー ${res.status}`);}
-      const data=await res.json();
-      const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n');
-      document.getElementById('rBody2').innerHTML='<div class="r-md">'+toHtml(text)+'</div>';
-    }catch(e){document.getElementById('rBody2').innerHTML=`<div class="err-box"><strong>エラー</strong><br>${e.message}</div>`;}
+  window.searchByProduct = async function() {
+    var kw = document.getElementById('prodInput').value.trim();
+    if (!kw) return;
+    if (!apiKey) { openModal(); return; }
+    document.getElementById('rHead2').textContent = '「' + kw + '」を取り扱う会社';
+    document.getElementById('rBody2').innerHTML = '<div class="loading"><div class="spin"></div>AIが検索中です…</div>';
+    try {
+      var res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-5',
+          max_tokens: 1500,
+          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+          messages: [{
+            role: 'user',
+            content: '「' + kw + '」を取り扱っている日本のメーカー・商社を教えてください。ウェブ検索で調べて日本語で回答してください。\n\n## 該当する可能性が高い会社\n（会社名と関連製品の説明を箇条書きで）\n\n## 補足情報'
+          }]
+        })
+      });
+      if (!res.ok) {
+        var e = await res.json().catch(function() { return {}; });
+        throw new Error(e.error ? e.error.message : 'HTTPエラー ' + res.status);
+      }
+      var data = await res.json();
+      var text = data.content.filter(function(b) { return b.type === 'text'; }).map(function(b) { return b.text; }).join('\n');
+      document.getElementById('rBody2').innerHTML = '<div class="r-md">' + toHtml(text) + '</div>';
+    } catch(e) {
+      document.getElementById('rBody2').innerHTML = '<div class="err-box"><strong>エラー</strong><br>' + e.message + '</div>';
+    }
   };
 
-  document.getElementById('prodInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchByProduct();});
+  document.getElementById('prodInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') searchByProduct();
+  });
 
-  function toHtml(s){
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-      .replace(/^###\s(.+)$/gm,'<h3>$1</h3>').replace(/^##\s(.+)$/gm,'<h2>$1</h2>').replace(/^#\s(.+)$/gm,'<h2>$1</h2>')
-      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-      .replace(/^[\-\*]\s(.+)$/gm,'<li>$1</li>').replace(/^\d+\.\s(.+)$/gm,'<li>$1</li>')
-      .replace(/(<li>[\s\S]*?<\/li>)/g,'<ul>$1</ul>')
-      .replace(/\n{2,}/g,'</p><p>').replace(/^(?!<[hup\/li])/gm,'<p>').replace(/<p>\s*<\/p>/g,'');
+  function toHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/^###\s(.+)$/gm, '<h3>$1</h3>')
+      .replace(/^##\s(.+)$/gm, '<h2>$1</h2>')
+      .replace(/^#\s(.+)$/gm, '<h2>$1</h2>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^[\-\*]\s(.+)$/gm, '<li>$1</li>')
+      .replace(/^\d+\.\s(.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>')
+      .replace(/\n{2,}/g, '</p><p>')
+      .replace(/^(?!<[hup\/li])/gm, '<p>')
+      .replace(/<p>\s*<\/p>/g, '');
   }
 
-  function updateDot(){
-    document.getElementById('dot').classList.toggle('ok',!!apiKey);
-    document.getElementById('hStatus').textContent=apiKey?'APIキー設定済み':'APIキー未設定';
+  function updateDot() {
+    document.getElementById('dot').classList.toggle('ok', !!apiKey);
+    document.getElementById('hStatus').textContent = apiKey ? 'APIキー設定済み' : 'APIキー未設定';
   }
-  function openModal(){
-    document.getElementById('keyInput').value=apiKey;
+
+  function openModal() {
+    document.getElementById('keyInput').value = apiKey;
     document.getElementById('overlay').classList.remove('hidden');
-    setTimeout(()=>document.getElementById('keyInput').focus(),50);
+    setTimeout(function() { document.getElementById('keyInput').focus(); }, 50);
   }
-  document.getElementById('settingBtn').addEventListener('click',openModal);
-  document.getElementById('cancelBtn').addEventListener('click',()=>document.getElementById('overlay').classList.add('hidden'));
-  document.getElementById('saveBtn').addEventListener('click',()=>{
-    const v=document.getElementById('keyInput').value.trim();
-    if(v){apiKey=v;localStorage.setItem('maker_api_key',v);updateDot();}
+
+  document.getElementById('settingBtn').addEventListener('click', openModal);
+  document.getElementById('cancelBtn').addEventListener('click', function() {
     document.getElementById('overlay').classList.add('hidden');
   });
-  document.getElementById('keyInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('saveBtn').click();});
-  document.getElementById('overlay').addEventListener('click',e=>{if(e.target===document.getElementById('overlay'))document.getElementById('overlay').classList.add('hidden');});
-  document.getElementById('searchInput').addEventListener('input',render);
-  document.getElementById('rowSel').addEventListener('change',render);
+  document.getElementById('saveBtn').addEventListener('click', function() {
+    var v = document.getElementById('keyInput').value.trim();
+    if (v) { apiKey = v; localStorage.setItem('maker_api_key', v); updateDot(); }
+    document.getElementById('overlay').classList.add('hidden');
+  });
+  document.getElementById('keyInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.getElementById('saveBtn').click();
+  });
+  document.getElementById('overlay').addEventListener('click', function(e) {
+    if (e.target === document.getElementById('overlay')) {
+      document.getElementById('overlay').classList.add('hidden');
+    }
+  });
+  document.getElementById('searchInput').addEventListener('input', render);
+  document.getElementById('rowSel').addEventListener('change', render);
   updateDot();
   render();
 }
